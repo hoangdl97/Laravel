@@ -12,5 +12,5 @@ npm-debug.log
 yarn-error.log
 .DS_Store
 app/.DS_Store
-app/public/js
-app/public/css
+public/js
+public/css
