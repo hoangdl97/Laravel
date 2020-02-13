@@ -2,11 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class Member extends Authenticatable
+class Member extends Model
 {
 	protected $fillable = [
 		'name', 'phone', 'email', 'address', 'image', 'username', 'password', 'is_admin'
