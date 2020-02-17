@@ -10,6 +10,7 @@
     <br>
     <table class="table table-sm table-striped table-hover bg-light">
         <br>
+        @if (isset($members))
         <tr class="thead-dark">
             <th class="text-center">ID</th>
             <th class="text-center">Name</th>
@@ -19,7 +20,7 @@
             <th class="text-center">Username</th>
             <th class="text-center">Password</th>
             <th class="text-center">Image</th>
-            <th class="text-center">Is_admin</th>
+            <th class="text-center">Position</th>
             <th class="text-center"></th>
         </tr>
         @foreach ($members as $member)
@@ -32,8 +33,8 @@
             <td class="text-center">{{ $member->username }}</td>
             <td class="text-center">{{ $member->password }}</td>
             <td class="text-center">{{ $member->image }}</td>
-            <td class="text-center">{{ $member->is_admin }}</td>
-            <td class="text-center">
+            <td class="text-center">{{ $member->is_admin_label }}</td>
+            <td class="text-center d-flex">
                 <a type="button" href="{{ route ('member.edit', $member->id) }}" class="btn btn-warning">
                     <span class="fa fa-edit mr-2"></span>Edit
                 </a>
@@ -47,5 +48,11 @@
         </tr>
         @endforeach
     </table>
+    <div class="d-flex justify-content-end">
+       {{ $members->links() }} 
+       @else
+            {{ $members->appends($_GET)->links() }}
+       @endif
+    </div>
 </div>
 @endsection

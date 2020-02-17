@@ -26,4 +26,5 @@ Route::prefix('member')->name('member.')->group(function() {
 	Route::get('/{id}/edit', 'MemberController@edit')->name('edit');
 	Route::put('/{id}', 'MemberController@update')->name('update');
 	Route::delete('/{id}', 'MemberController@destroy')->name('destroy');
+	Route::get('/search', 'MemberController@index')->name('search');
 });

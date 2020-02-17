@@ -13,10 +13,21 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $members = Member::all();
-        return view('member.member')->with('members', $members);
+        $members = Member::Where(function($query) use ($request) 
+        {
+            if (!empty($request->keySearch)) {
+                $query->where('name', 'like', '%' . $request->keySearch . '%')  
+                ->orWhere('email', 'like', '%' . $request->keySearch . '%')
+                ->orWhere('phone', 'like', '%' . $request->keySearch . '%')
+                ->orWhere('id', 'like', '%' . $request->keySearch . '%');      
+            }
+        })->paginate(config('app.pagination'));
+        return view('member.index', ['members' => $members]);
+
+        $members = Member::paginate(config('app.pagination'));
+        return view('member.index', ['members' => $members]);
         //
     }
 
@@ -39,22 +50,10 @@ class MemberController extends Controller
      */
     public function store(RegisterMemberRequest $request)
     {
-        // dd(12);
         $result = new Member();
         $result = Member::create($request->all());
 
         return redirect()->route('member.index');
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
         //
     }
 
@@ -96,7 +95,7 @@ class MemberController extends Controller
     {
         $result = Member::findOrFail($id);
         $result->delete();
-        return redirect()->route('member.index');
+        return redirect()->route('member.index')->with('success', __('messages.destroy'));
         //
     }
 }

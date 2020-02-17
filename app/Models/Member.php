@@ -2,10 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Member extends Model
+class Member extends Authenticatable
 {
+	const IS_ADMIN = [
+        0 => 'Admin',
+        1 => 'User'
+    ];
+    
 	protected $fillable = [
 		'name', 'phone', 'email', 'address', 'image', 'username', 'password', 'is_admin'
 	];
@@ -23,5 +30,10 @@ class Member extends Model
 	{
 		return $this->belongsToMany(Project::class, 'member_project');
 	}
+
+	public function getIsAdminLabelAttribute()
+    {
+        return self::IS_ADMIN[$this->is_admin];
+    }
     //
 }
