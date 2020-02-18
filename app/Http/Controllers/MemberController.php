@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Member;
 use App\Http\Requests\RegisterMemberRequest;
+use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
@@ -15,20 +16,10 @@ class MemberController extends Controller
      */
     public function index(Request $request)
     {
-        $members = Member::Where(function($query) use ($request) 
-        {
-            if (!empty($request->keySearch)) {
-                $query->where('name', 'like', '%' . $request->keySearch . '%')  
-                ->orWhere('email', 'like', '%' . $request->keySearch . '%')
-                ->orWhere('phone', 'like', '%' . $request->keySearch . '%')
-                ->orWhere('id', 'like', '%' . $request->keySearch . '%');      
-            }
-        })->paginate(config('app.pagination'));
+        $members = Member::search($request)
+            ->searchPosition($request)
+            ->paginate(config('app.pagination'));
         return view('member.index', ['members' => $members]);
-
-        $members = Member::paginate(config('app.pagination'));
-        return view('member.index', ['members' => $members]);
-        //
     }
 
     /**
@@ -39,7 +30,6 @@ class MemberController extends Controller
     public function create()
     {
         return view('member.create');
-        //
     }
 
     /**
@@ -50,11 +40,14 @@ class MemberController extends Controller
      */
     public function store(RegisterMemberRequest $request)
     {
-        $result = new Member();
-        $result = Member::create($request->all());
+        $data = $request->all();
+        $imageData = uniqid() . '.' . request()->image->getClientOriginalExtension();
+        request()->image->storeAs('/public/uploads', $imageData);
+        $data['image'] = $imageData;
+        $data['password'] = Hash::make($data['password']);
+        Member::create($data);
 
-        return redirect()->route('member.index');
-        //
+        return redirect()->route('member.index')->with('success', __('messages.create'));
     }
 
     /**
@@ -66,7 +59,6 @@ class MemberController extends Controller
     public function edit($id)
     {
         return view('member.edit')->with('members', Member::findOrFail($id));
-        //
     }
 
     /**
@@ -78,11 +70,15 @@ class MemberController extends Controller
      */
     public function update(RegisterMemberRequest $request, $id)
     {
-        $result = Member::findOrFail($id);
-        $result->update($request->all());
+        $data = $request->all();
+        $imageData = uniqid() . '.' . request()->image->getClientOriginalExtension();
+        request()->image->storeAs('/public/uploads', $imageData);
+        $imageData = $imageData;
+        $data['image'] = $imageData;
+        $data['password'] = Hash::make($data['password']);
 
+        $member = Member::findOrFail($id)->update($data);
         return redirect()->route('member.index');
-        //
     }
 
     /**
@@ -96,6 +92,5 @@ class MemberController extends Controller
         $result = Member::findOrFail($id);
         $result->delete();
         return redirect()->route('member.index')->with('success', __('messages.destroy'));
-        //
     }
 }

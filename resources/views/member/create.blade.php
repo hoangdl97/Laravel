@@ -10,7 +10,7 @@
         <div class="col-sm-8 col-md-5 col-12 m-auto">
             <div class="panel panel-warning">
                 <div class="panel-body">
-                    <form action="{{ route('member.store') }}" method="post">
+                    <form action="{{ route('member.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label>Name :</label>

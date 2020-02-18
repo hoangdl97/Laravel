@@ -10,7 +10,7 @@
         <div class="col-sm-8 col-md-5 col-12 m-auto">
             <div class="panel panel-warning">
                 <div class="panel-body">
-                    <form action="{{ route('member.update', $members->id) }}" method="post">
+                    <form action="{{ route('member.update', $members->id) }}" method="post" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
                         <div class="form-group">
@@ -76,7 +76,7 @@
                         <div class="form-group">
                             <label>Image :</label>
                             <div>
-                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" value="{{ $members->image }}" required autocomplete="image" autofocus>
+                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" required autocomplete="image" autofocus>
 
                                 @error('image')
                                     <span class="invalid-feedback" role="alert">
@@ -88,7 +88,11 @@
                         <div class="form-group">
                             <label>Position :</label>
                             <div>
-                                <input id="is_admin" type="text" class="form-control @error('is_admin') is-invalid @enderror" name="is_admin" value="{{ $members->is_admin }}" required autocomplete="is_admin" autofocus>
+                                <select name="is_admin" class="form-control @error('is_admin') is-invalid @enderror" value="{{ old('is_admin') }}" required autocomplete="is_admin">
+                                    @foreach (App\Models\Member::IS_ADMIN as $key => $label)
+                                        <option value="{{ $key }}">{{ $label }}</option>
+                                    @endforeach
+                                </select>
 
                                 @error('is_admin')
                                     <span class="invalid-feedback" role="alert">

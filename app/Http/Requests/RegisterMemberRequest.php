@@ -30,7 +30,7 @@ class RegisterMemberRequest extends FormRequest
             'address' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'max:20'],
             'password' => ['required', 'string', 'min:8'],
-            'image' => ['required', 'string', 'max:255'],
+            'image' => ['required', 'image', 'max:2048'],
             'is_admin' => ['required', 'integer'],
             //
         ];

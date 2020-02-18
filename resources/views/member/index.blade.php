@@ -3,12 +3,39 @@
 @section('management', 'Manager Members')
 
 @section('content')
-<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <a type="button" href="{{ route('member.create') }}" class="btn btn-success">
+<div class="d-flex col-xs-12 col-sm-12 col-md-12 col-lg-12">
+    <a type="button" href="{{ route('member.create') }}" class="btn btn-success col-auto mr-auto">
         <span class="fa fa-edit mr-2"></span>Add
     </a>
+</div>
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
     <br>
-    <table class="table table-sm table-striped table-hover bg-light">
+    <div class="d-flex">
+        <form class="form-inline" method="get" action="{{ route('member.search') }}">
+            <div class="input-group input-group-sm">
+                <table>
+                    <th><input class="form-control" type="text" placeholder="Name" aria-label="Search" name="searchName"></th>
+                    <th><input class="form-control" type="text" placeholder="Email" aria-label="Search" name="searchEmail"></th>
+                    <th><input class="form-control" type="text" placeholder="Phone" aria-label="Search" name="searchPhone"></th>
+                    <th><input class="form-control" type="text" placeholder="Username" aria-label="Search" name="searchUser"></th>
+                    <th>
+                        <select name="searchPosition" class="form-control col-auto @error('is_admin') is-invalid @enderror" value="{{ old('is_admin') }}" required autocomplete="is_admin">
+                        @foreach (App\Models\Member::IS_ADMIN as $key => $label)
+                                <option value="{{ $key }}">{{ $label }}</option>
+                        @endforeach
+                        </select>
+                    </th>
+                    <th>
+                        <button class="btn btn-navbar" type="submit">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </th>
+                </table>
+            </div>
+        </form>
+    </div>
+    
+    <table class="table table-sm table-hover bg-light">
         <br>
         @if (isset($members))
         <tr class="thead-dark">
@@ -32,7 +59,7 @@
             <td class="text-center">{{ $member->address }}</td>
             <td class="text-center">{{ $member->username }}</td>
             <td class="text-center">{{ $member->password }}</td>
-            <td class="text-center">{{ $member->image }}</td>
+            <td class="text-center"><img class="w-75" src="{{ asset("storage/uploads/$member->image") }}"></td>
             <td class="text-center">{{ $member->is_admin_label }}</td>
             <td class="text-center d-flex">
                 <a type="button" href="{{ route ('member.edit', $member->id) }}" class="btn btn-warning">
