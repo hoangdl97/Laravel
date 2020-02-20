@@ -86,7 +86,12 @@ class MemberController extends Controller
             request()->image->storeAs('public/uploads', $imageData);
             $data['image'] = $imageData;
         }
-        $data['password'] = Hash::make($data['password']);
+        
+        if (isset($data['password'])) {
+            $data['password'] = Hash::make($data['password']);
+        } else {
+            unset($data['password']);
+        }
 
         Member::findOrFail($id)->update($data);
         return redirect()->route('member.index')->with('success', __('Edit successfully'));

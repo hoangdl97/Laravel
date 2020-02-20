@@ -110,7 +110,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                with font-awesome or any other icon font library -->
                         <li class="nav-item has-treeview menu-open">
                             <a href="#" class="nav-link active">
-                                <i class="fa fa-tachometer-alt"></i>
                                 <p>
                                     Manager
                                     <i class="right fa fa-angle-left"></i>
@@ -119,7 +118,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="/member" class="nav-link">
-                                        <i class="fa fa-user-tie mr-2"></i>
+                                        <i class="fas fa-user-cog"></i>
                                         <p>Member</p>
                                     </a>
                                 </li>
@@ -137,7 +136,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon"></i>
+                                        <i class="fa fa-user-tie mr-2"></i>
                                         <p>Customer</p>
                                     </a>
                                 </li>
