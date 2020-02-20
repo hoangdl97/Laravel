@@ -29,22 +29,24 @@ class Member extends Authenticatable
 
     public function scopeSearchEmail($query, $request)
     {
-        return $query->where('email', 'like', '%' . $request->searchEmail . '%');
+        return $query->Where('email', 'like', '%' . $request->searchEmail . '%');
     }
 
     public function scopeSearchPhone($query, $request)
     {
-        return $query->where('phone', 'like', '%' . $request->searchPhone . '%');
+        return $query->Where('phone', 'like', '%' . $request->searchPhone . '%');
     }
 
     public function scopeSearchUser($query, $request)
     {
-        return $query->where('username', 'like', '%' . $request->searchUser . '%');
+        return $query->Where('username', 'like', '%' . $request->searchUser . '%');
     }
 
     public function scopeSearchPosition($query, $request)
     {
-        return $query->where('is_admin', 'like', '%' . $request->searchPosition . '%');
+        if (!empty($request->searchPosition)) {
+            return $query->where('is_admin', $request->searchPosition);
+        }
     }
 
 	protected $fillable = [

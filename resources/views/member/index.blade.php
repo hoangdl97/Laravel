@@ -19,9 +19,10 @@
                     <th><input class="form-control" type="text" placeholder="Phone" aria-label="Search" name="searchPhone"></th>
                     <th><input class="form-control" type="text" placeholder="Username" aria-label="Search" name="searchUser"></th>
                     <th>
-                        <select name="searchPosition" class="form-control col-auto @error('is_admin') is-invalid @enderror" value="{{ old('is_admin') }}" required autocomplete="is_admin">
-                        @foreach (App\Models\Member::IS_ADMIN as $key => $label)
-                                <option value="{{ $key }}">{{ $label }}</option>
+                        <select name="searchPosition" class="form-control col-auto @error('is_admin') is-invalid @enderror" value="{{ old('is_admin') }}" autocomplete="is_admin">
+                            <option></option>
+                        @foreach (App\Models\Member::IS_ADMIN as $key => $value)
+                            <option placeholder="Position" value="{{ $key }}">{{ $value }}</option>
                         @endforeach
                         </select>
                     </th>
@@ -33,8 +34,15 @@
                 </table>
             </div>
         </form>
-    </div>
-    
+    </div><br>
+    @if (session('success'))
+        <div class="alert alert-warning alert-dismissible fade show w-25" role="alert">
+
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">x</a>
+            {{ session('success') }}
+        </div>
+    @endif
+
     <table class="table table-sm table-hover bg-light">
         <br>
         @if (isset($members))
@@ -66,20 +74,19 @@
                     <span class="fa fa-edit mr-2"></span>Edit
                 </a>
                 &nbsp;
-                <form action="{{ route('member.destroy', $member->id) }}" method="post">
-                    @method('delete')
+                <form action="{{ route('member.destroy', $member->id) }}" method="POST" accept-charset="utf-">
+                    @method('DELETE')
                     @csrf
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="submit" class="btn btn-danger"><span class="fa fa-trash mr-2"></span>Delete</button>
                 </form>
             </td>
         </tr>
         @endforeach
     </table>
     <div class="d-flex justify-content-end">
-       {{ $members->links() }} 
-       @else
             {{ $members->appends($_GET)->links() }}
-       @endif
+       
     </div>
+    @endif
 </div>
 @endsection

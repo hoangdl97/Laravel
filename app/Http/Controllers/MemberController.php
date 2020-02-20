@@ -5,10 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Member;
 use App\Http\Requests\RegisterMemberRequest;
+use App\Http\Requests\EditMemberRequest;
 use Illuminate\Support\Facades\Hash;
 
 class MemberController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -47,7 +54,7 @@ class MemberController extends Controller
         $data['password'] = Hash::make($data['password']);
         Member::create($data);
 
-        return redirect()->route('member.index')->with('success', __('messages.create'));
+        return redirect()->route('member.index')->with('success', __('Add successfully'));
     }
 
     /**
@@ -68,17 +75,20 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(RegisterMemberRequest $request, $id)
+    public function update(EditMemberRequest $request, $id)
     {
         $data = $request->all();
-        $imageData = uniqid() . '.' . request()->image->getClientOriginalExtension();
-        request()->image->storeAs('/public/uploads', $imageData);
-        $imageData = $imageData;
-        $data['image'] = $imageData;
-        $data['password'] = Hash::make($data['password']);
 
-        $member = Member::findOrFail($id)->update($data);
-        return redirect()->route('member.index');
+        $imageData = $request->hidden_image;
+        $image = $request->file('image');
+        if ($image != '') {
+            $imageData = uniqid() . '.' . request()->image->getClientOriginalExtension();
+            request()->image->storeAs('public/uploads', $imageData);
+            $data['image'] = $imageData;
+        }
+
+        Member::findOrFail($id)->update($data);
+        return redirect()->route('member.index')->with('success', __('Edit successfully'));
     }
 
     /**
@@ -91,6 +101,6 @@ class MemberController extends Controller
     {
         $result = Member::findOrFail($id);
         $result->delete();
-        return redirect()->route('member.index')->with('success', __('messages.destroy'));
+        return redirect()->route('member.index')->with('success', __('Delete successfully'));
     }
 }

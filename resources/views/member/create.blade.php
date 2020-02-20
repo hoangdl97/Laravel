@@ -100,6 +100,7 @@
                                 @enderror
                             </div>
                         </div>
+                        
                         <div class="form-group">
                             <label for="password" class="col-form-label text-md-right">{{ __('Password') }}</label>
 

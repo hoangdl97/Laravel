@@ -76,7 +76,9 @@
                         <div class="form-group">
                             <label>Image :</label>
                             <div>
-                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" required autocomplete="image" autofocus>
+                                <input id="image" type="file" class="form-control @error('image') is-invalid @enderror" name="image" value="" autocomplete="image">
+                                <img class="w-25" src="{{ asset("storage/uploads/$members->image") }}" alt="image"/>
+                                <input type="text" name="hidden_image" value="{{ $members->image }}">
 
                                 @error('image')
                                     <span class="invalid-feedback" role="alert">
@@ -89,6 +91,7 @@
                             <label>Position :</label>
                             <div>
                                 <select name="is_admin" class="form-control @error('is_admin') is-invalid @enderror" value="{{ old('is_admin') }}" required autocomplete="is_admin">
+                                    <option value="">{{ $members->is_admin_label }}</option>
                                     @foreach (App\Models\Member::IS_ADMIN as $key => $label)
                                         <option value="{{ $key }}">{{ $label }}</option>
                                     @endforeach
@@ -104,13 +107,21 @@
                         <div class="form-group">
                             <label>Password :</label>
                             <div>
-                                <input id="password" type="text" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ $members->password }}" required autocomplete="password" autofocus>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ $members->password }}" required autocomplete="password" autofocus>
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password-confirm" class="col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+
+                            <div>
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" value="{{ $members->password }}" required autocomplete="new-password">
                             </div>
                         </div>
                         <div class="text-center">
