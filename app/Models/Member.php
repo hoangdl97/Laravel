@@ -5,9 +5,50 @@ namespace App\Models;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Http\Request;
 
 class Member extends Authenticatable
 {
+	const IS_ADMIN = [
+        0 => 'Admin',
+        1 => 'User'
+    ];
+
+    public function scopeSearch($query, $request)
+    {
+        return $query->searchName($request)
+            ->searchEmail($request)
+            ->searchPhone($request)
+            ->searchUser($request);
+    }
+
+    public function scopeSearchName($query, $request)
+    {
+        return $query->where('name', 'like', '%' . $request->searchName . '%');
+    }
+
+    public function scopeSearchEmail($query, $request)
+    {
+        return $query->Where('email', 'like', '%' . $request->searchEmail . '%');
+    }
+
+    public function scopeSearchPhone($query, $request)
+    {
+        return $query->Where('phone', 'like', '%' . $request->searchPhone . '%');
+    }
+
+    public function scopeSearchUser($query, $request)
+    {
+        return $query->Where('username', 'like', '%' . $request->searchUser . '%');
+    }
+
+    public function scopeSearchPosition($query, $request)
+    {
+        if (isset($request->searchPosition)) {
+            return $query->where('is_admin', $request->searchPosition);
+        }
+    }
+
 	protected $fillable = [
 		'name', 'phone', 'email', 'address', 'image', 'username', 'password', 'is_admin'
 	];
@@ -25,5 +66,10 @@ class Member extends Authenticatable
 	{
 		return $this->belongsToMany(Project::class, 'member_project');
 	}
+
+	public function getIsAdminLabelAttribute()
+    {
+        return self::IS_ADMIN[$this->is_admin];
+    }
     //
 }

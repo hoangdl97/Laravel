@@ -5,6 +5,8 @@
  */
 
 require('./bootstrap');
+require('../../node_modules/admin-lte/plugins/jquery/jquery.min.js');
+require('../../node_modules/admin-lte/dist/js/adminlte.min.js');
 
 window.Vue = require('vue');
 

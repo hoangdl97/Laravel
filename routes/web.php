@@ -18,3 +18,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::resource('member', 'MemberController', [
+	'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']
+]);
+
+Route::prefix('member')->name('member.')->group(function() {
+    Route::get('search', 'MemberController@index')->name('search');
+});
