@@ -80,7 +80,7 @@ class MemberController extends Controller
         $data = $request->all();
 
         $imageData = $request->hidden_image;
-        $image = $request->file('image2wbmp(image)');
+        $image = $request->file('image');
         if ($image != '') {
             $imageData = uniqid() . '.' . request()->image->getClientOriginalExtension();
             request()->image->storeAs('public/uploads', $imageData);
