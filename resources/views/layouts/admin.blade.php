@@ -11,10 +11,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title>Home | @yield('title')</title>
-    <link rel="stylesheet" type="text/css" href="{{ asset('dist/css/adminlte.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('plugins/font-awesome/css/font-awesome.css') }}">
-    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css"/>
 </head>
 
 <body class="hold-transition sidebar-mini">
@@ -119,19 +119,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
                                     <a href="/member" class="nav-link">
-                                        <i class="fa fa-circle nav-icon"></i>
+                                        <i class="fa fa-user-tie mr-2"></i>
                                         <p>Member</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon"></i>
+                                        <i class="fa fa-project-diagram"></i>
                                         <p>Project</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
                                     <a href="#" class="nav-link">
-                                        <i class="fa fa-circle nav-icon"></i>
+                                        <i class="fa fa-tasks"></i>
                                         <p>Task</p>
                                     </a>
                                 </li>
@@ -181,12 +181,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
-
-    <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
+    <script src="{{ asset('js/app.js') }}"></script>
 </body>
 
 </html>

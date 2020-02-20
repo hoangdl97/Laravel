@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="text-center">
-        <h1>Add Member</h1>
+        <h1><span class="fa fa-user-plus mr-2"></span>Add Member</h1>
         <hr/>
     </div>
     <div class="row">

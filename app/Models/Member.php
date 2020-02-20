@@ -44,7 +44,7 @@ class Member extends Authenticatable
 
     public function scopeSearchPosition($query, $request)
     {
-        if (!empty($request->searchPosition)) {
+        if (isset($request->searchPosition)) {
             return $query->where('is_admin', $request->searchPosition);
         }
     }

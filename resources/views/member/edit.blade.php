@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="text-center">
-        <h1>Edit Member</h1>
+        <h1><span class="fa fa-user-edit mr-2"></span>Edit Member</h1>
         <hr/>
     </div>
     <div class="row">
@@ -16,7 +16,7 @@
                         <div class="form-group">
                             <label>Name :</label>
                             <div>
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ $members->name }}" required autocomplete="name" autofocus>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ (old('name')) ? old('name') : $members->name }}" required autocomplete="name" autofocus>
 
                                 @error('name')
                                     <span class="invalid-feedback" role="alert">
@@ -28,7 +28,7 @@
                         <div class="form-group">
                             <label>Email :</label>
                             <div>
-                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $members->email }}" required autocomplete="email" autofocus>
+                                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ (old('email')) ? old('email') : $members->email }}" required autocomplete="email" autofocus>
 
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -40,7 +40,7 @@
                         <div class="form-group">
                             <label>Phone :</label>
                             <div>
-                                <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ $members->phone }}" required autocomplete="phone" autofocus>
+                                <input id="phone" type="text" class="form-control @error('phone') is-invalid @enderror" name="phone" value="{{ (old('phone')) ? old('phone') : $members->phone }}" required autocomplete="phone" autofocus>
 
                                 @error('phone')
                                     <span class="invalid-feedback" role="alert">
@@ -52,7 +52,7 @@
                         <div class="form-group">
                             <label>Address :</label>
                             <div>
-                                <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ $members->address }}" required autocomplete="address" autofocus>
+                                <input id="address" type="text" class="form-control @error('address') is-invalid @enderror" name="address" value="{{ (old('address')) ? old('address') : $members->address }}" required autocomplete="address" autofocus>
 
                                 @error('address')
                                     <span class="invalid-feedback" role="alert">
@@ -64,7 +64,7 @@
                         <div class="form-group">
                             <label>Username :</label>
                             <div>
-                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ $members->username }}" required autocomplete="username" autofocus>
+                                <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ (old('username')) ? old('username') : $members->username }}" required autocomplete="username" autofocus>
 
                                 @error('username')
                                     <span class="invalid-feedback" role="alert">
@@ -91,9 +91,8 @@
                             <label>Position :</label>
                             <div>
                                 <select name="is_admin" class="form-control @error('is_admin') is-invalid @enderror" value="{{ old('is_admin') }}" required autocomplete="is_admin">
-                                    <option value="">{{ $members->is_admin_label }}</option>
                                     @foreach (App\Models\Member::IS_ADMIN as $key => $label)
-                                        <option value="{{ $key }}">{{ $label }}</option>
+                                        <option value="{{ $key }}" @if(old('is_admin') == $key) selected @elseif($members->is_admin == $key) selected @endif>{{ $label }}</option>
                                     @endforeach
                                 </select>
 
@@ -107,7 +106,7 @@
                         <div class="form-group">
                             <label>Password :</label>
                             <div>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ $members->password }}" required autocomplete="password" autofocus>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="" autocomplete="password">
 
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
@@ -121,7 +120,7 @@
                             <label for="password-confirm" class="col-form-label text-md-right">{{ __('Confirm Password') }}</label>
 
                             <div>
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" value="{{ $members->password }}" required autocomplete="new-password">
+                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" value="" autocomplete="new-password">
                             </div>
                         </div>
                         <div class="text-center">

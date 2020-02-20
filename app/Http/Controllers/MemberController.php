@@ -80,12 +80,13 @@ class MemberController extends Controller
         $data = $request->all();
 
         $imageData = $request->hidden_image;
-        $image = $request->file('image');
+        $image = $request->file('image2wbmp(image)');
         if ($image != '') {
             $imageData = uniqid() . '.' . request()->image->getClientOriginalExtension();
             request()->image->storeAs('public/uploads', $imageData);
             $data['image'] = $imageData;
         }
+        $data['password'] = Hash::make($data['password']);
 
         Member::findOrFail($id)->update($data);
         return redirect()->route('member.index')->with('success', __('Edit successfully'));
