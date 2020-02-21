@@ -70,7 +70,6 @@
     </table>
     <div class="d-flex justify-content-end">
                 {{ $customers->appends($_GET)->links() }}
-           
         </div>
         @endif
     </div>

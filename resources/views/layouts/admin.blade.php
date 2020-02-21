@@ -117,7 +117,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="/member" class="nav-link">
+                                    <a href="{{ route('member.index') }}" class="nav-link">
                                         <i class="fas fa-user-cog"></i>
                                         <p>Member</p>
                                     </a>
@@ -135,7 +135,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="/customer" class="nav-link">
+                                    <a href="{{ route('customer.index') }}" class="nav-link">
                                         <i class="fa fa-user-tie mr-2"></i>
                                         <p>Customer</p>
                                     </a>

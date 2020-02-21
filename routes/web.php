@@ -31,6 +31,6 @@ Route::resource('customer', 'CustomerController', [
 	'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']
 ]);
 
-Route::prefix('customer')->name('member.')->group(function() {
+Route::prefix('customer')->name('customer.')->group(function() {
     Route::get('search', 'CustomerController@index')->name('search');
 });
