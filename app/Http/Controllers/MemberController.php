@@ -54,7 +54,7 @@ class MemberController extends Controller
         $data['password'] = Hash::make($data['password']);
         Member::create($data);
 
-        return redirect()->route('members.index')->with('success', __('Add successfully'));
+        return redirect()->route('member.index')->with('success', __('Add successfully'));
     }
 
     /**
@@ -94,7 +94,7 @@ class MemberController extends Controller
         }
 
         Member::findOrFail($id)->update($data);
-        return redirect()->route('members.index')->with('success', __('Edit successfully'));
+        return redirect()->route('member.index')->with('success', __('Edit successfully'));
     }
 
     /**
@@ -107,6 +107,6 @@ class MemberController extends Controller
     {
         $result = Member::findOrFail($id);
         $result->delete();
-        return redirect()->route('members.index')->with('success', __('Delete successfully'));
+        return redirect()->route('member.index')->with('success', __('Delete successfully'));
     }
 }

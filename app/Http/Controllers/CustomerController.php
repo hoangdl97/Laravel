@@ -47,7 +47,7 @@ class CustomerController extends Controller
         $data['image'] = $imageData;
         Customer::create($data);
 
-        return redirect()->route('customers.index')->with('success', __('Add successfully'));
+        return redirect()->route('customer.index')->with('success', __('Add successfully'));
         //
     }
 
@@ -59,7 +59,7 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-        return view('customer.edit')->with('customers', Customer::findOrFail($id));
+        return view('customers.edit')->with('customer', Customer::findOrFail($id));
         //
     }
 
@@ -81,7 +81,7 @@ class CustomerController extends Controller
         }
 
         Customer::findOrFail($id)->update($data);
-        return redirect()->route('customers.index')->with('success', __('Edit successfully'));
+        return redirect()->route('customer.index')->with('success', __('Edit successfully'));
         //
     }
 
@@ -95,7 +95,7 @@ class CustomerController extends Controller
     {
         $result = Customer::findOrFail($id);
         $result->delete();
-        return redirect()->route('customers.index')->with('success', __('Delete successfully'));
+        return redirect()->route('customer.index')->with('success', __('Delete successfully'));
         //
     }
 }
