@@ -65,7 +65,7 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        return view('members.edit')->with('members', Member::findOrFail($id));
+        return view('members.edit')->with('member', Member::findOrFail($id));
     }
 
     /**
