@@ -3,19 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Member;
-use App\Http\Requests\RegisterMemberRequest;
-use App\Http\Requests\EditMemberRequest;
-use Illuminate\Support\Facades\Hash;
+use App\Models\Customer;
+use App\Http\Requests\RegisterCustomerRequest;
+use App\Http\Requests\EditCustomerRequest;
 
-class MemberController extends Controller
+class CustomerController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     /**
      * Display a listing of the resource.
      *
@@ -23,10 +16,10 @@ class MemberController extends Controller
      */
     public function index(Request $request)
     {
-        $members = Member::search($request)
-            ->searchPosition($request)
+        $customers = Customer::search($request)
             ->paginate(config('app.pagination'));
-        return view('members.index', ['members' => $members]);
+        return view('customers.index', ['customers' => $customers]);
+        //
     }
 
     /**
@@ -36,7 +29,8 @@ class MemberController extends Controller
      */
     public function create()
     {
-        return view('members.create');
+        return view('customers.create');
+        //
     }
 
     /**
@@ -45,16 +39,16 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RegisterMemberRequest $request)
+    public function store(RegisterCustomerRequest $request)
     {
         $data = $request->all();
         $imageData = uniqid() . '.' . request()->image->getClientOriginalExtension();
         request()->image->storeAs('/public/uploads', $imageData);
         $data['image'] = $imageData;
-        $data['password'] = Hash::make($data['password']);
-        Member::create($data);
+        Customer::create($data);
 
-        return redirect()->route('member.index')->with('success', __('Add successfully'));
+        return redirect()->route('customer.index')->with('success', __('Add successfully'));
+        //
     }
 
     /**
@@ -65,7 +59,8 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        return view('members.edit')->with('member', Member::findOrFail($id));
+        return view('customers.edit')->with('customer', Customer::findOrFail($id));
+        //
     }
 
     /**
@@ -75,26 +70,19 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditMemberRequest $request, $id)
+    public function update(EditCustomerRequest $request, $id)
     {
         $data = $request->all();
-
-        $imageData = $request->hidden_image;
         $image = $request->file('image');
         if ($image != '') {
             $imageData = uniqid() . '.' . request()->image->getClientOriginalExtension();
             request()->image->storeAs('public/uploads', $imageData);
             $data['image'] = $imageData;
         }
-        
-        if (isset($data['password'])) {
-            $data['password'] = Hash::make($data['password']);
-        } else {
-            unset($data['password']);
-        }
 
-        Member::findOrFail($id)->update($data);
-        return redirect()->route('member.index')->with('success', __('Edit successfully'));
+        Customer::findOrFail($id)->update($data);
+        return redirect()->route('customer.index')->with('success', __('Edit successfully'));
+        //
     }
 
     /**
@@ -105,8 +93,9 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        $result = Member::findOrFail($id);
+        $result = Customer::findOrFail($id);
         $result->delete();
-        return redirect()->route('member.index')->with('success', __('Delete successfully'));
+        return redirect()->route('customer.index')->with('success', __('Delete successfully'));
+        //
     }
 }

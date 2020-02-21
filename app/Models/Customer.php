@@ -1,18 +1,35 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 
 class Customer extends Model
 {
-	protected $fillable = [
-		'name', 'phone', 'email', 'address', 'image',
-	];
+    public function scopeSearch($query, $request) {
+        return $query->searchName($request)
+	        ->searchEmail($request)
+	        ->searchPhone($request);
+    }
 
-	public function projects()
-	{
-		return $this->hasMany(Project::class);
-	}
-    //
+    public function scopeSearchName($query, $request) {
+        return $query->where('name', 'like', '%' . $request->searchName . '%');
+    }
+
+    public function scopeSearchEmail($query, $request) {
+        return $query->where('email', 'like', '%' . $request->searchEmail . '%');
+    }
+
+    public function scopeSearchPhone($query, $request) {
+        return $query->where('phone', 'like', '%' . $request->searchPhone . '%');
+    }
+
+    protected $fillable = [
+        'name', 'phone', 'email', 'address', 'image',
+    ];
+
+    public function projects() {
+        return $this->hasMany(Project::class);
+    }
 }

@@ -19,7 +19,7 @@ class CreateCustomersTable extends Migration
             $table->string('phone', 20);
             $table->string('email', 255)->unique();
             $table->string('address', 255);
-            $table->string('image', 255);
+            $table->string('image', 2048);
             $table->timestamps();
         });
     }

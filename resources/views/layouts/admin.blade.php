@@ -106,8 +106,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-                        <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
                         <li class="nav-item has-treeview menu-open">
                             <a href="#" class="nav-link active">
                                 <p>
@@ -117,7 +115,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="/member" class="nav-link">
+                                    <a href="{{ route('member.index') }}" class="nav-link">
                                         <i class="fas fa-user-cog"></i>
                                         <p>Member</p>
                                     </a>
@@ -135,7 +133,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="{{ route('customer.index') }}" class="nav-link">
                                         <i class="fa fa-user-tie mr-2"></i>
                                         <p>Customer</p>
                                     </a>
