@@ -26,7 +26,7 @@ class MemberController extends Controller
         $members = Member::search($request)
             ->searchPosition($request)
             ->paginate(config('app.pagination'));
-        return view('member.index', ['members' => $members]);
+        return view('members.index', ['members' => $members]);
     }
 
     /**
@@ -36,7 +36,7 @@ class MemberController extends Controller
      */
     public function create()
     {
-        return view('member.create');
+        return view('members.create');
     }
 
     /**
@@ -54,7 +54,7 @@ class MemberController extends Controller
         $data['password'] = Hash::make($data['password']);
         Member::create($data);
 
-        return redirect()->route('member.index')->with('success', __('Add successfully'));
+        return redirect()->route('members.index')->with('success', __('Add successfully'));
     }
 
     /**
@@ -65,7 +65,7 @@ class MemberController extends Controller
      */
     public function edit($id)
     {
-        return view('member.edit')->with('members', Member::findOrFail($id));
+        return view('members.edit')->with('members', Member::findOrFail($id));
     }
 
     /**
@@ -94,7 +94,7 @@ class MemberController extends Controller
         }
 
         Member::findOrFail($id)->update($data);
-        return redirect()->route('member.index')->with('success', __('Edit successfully'));
+        return redirect()->route('members.index')->with('success', __('Edit successfully'));
     }
 
     /**
@@ -107,6 +107,6 @@ class MemberController extends Controller
     {
         $result = Member::findOrFail($id);
         $result->delete();
-        return redirect()->route('member.index')->with('success', __('Delete successfully'));
+        return redirect()->route('members.index')->with('success', __('Delete successfully'));
     }
 }

@@ -18,7 +18,7 @@ class CustomerController extends Controller
     {
         $customers = Customer::search($request)
             ->paginate(config('app.pagination'));
-        return view('customer.index', ['customers' => $customers]);
+        return view('customers.index', ['customers' => $customers]);
         //
     }
 
@@ -29,7 +29,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('customer.create');
+        return view('customers.create');
         //
     }
 
@@ -47,7 +47,7 @@ class CustomerController extends Controller
         $data['image'] = $imageData;
         Customer::create($data);
 
-        return redirect()->route('customer.index')->with('success', __('Add successfully'));
+        return redirect()->route('customers.index')->with('success', __('Add successfully'));
         //
     }
 
@@ -81,7 +81,7 @@ class CustomerController extends Controller
         }
 
         Customer::findOrFail($id)->update($data);
-        return redirect()->route('customer.index')->with('success', __('Edit successfully'));
+        return redirect()->route('customers.index')->with('success', __('Edit successfully'));
         //
     }
 
@@ -95,7 +95,7 @@ class CustomerController extends Controller
     {
         $result = Customer::findOrFail($id);
         $result->delete();
-        return redirect()->route('customer.index')->with('success', __('Delete successfully'));
+        return redirect()->route('customers.index')->with('success', __('Delete successfully'));
         //
     }
 }
