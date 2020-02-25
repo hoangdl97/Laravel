@@ -29,17 +29,17 @@ class Member extends Authenticatable
 
     public function scopeSearchEmail($query, $request)
     {
-        return $query->Where('email', 'like', '%' . $request->searchEmail . '%');
+        return $query->where('email', 'like', '%' . $request->searchEmail . '%');
     }
 
     public function scopeSearchPhone($query, $request)
     {
-        return $query->Where('phone', 'like', '%' . $request->searchPhone . '%');
+        return $query->where('phone', 'like', '%' . $request->searchPhone . '%');
     }
 
     public function scopeSearchUser($query, $request)
     {
-        return $query->Where('username', 'like', '%' . $request->searchUser . '%');
+        return $query->where('username', 'like', '%' . $request->searchUser . '%');
     }
 
     public function scopeSearchPosition($query, $request)
@@ -66,6 +66,11 @@ class Member extends Authenticatable
 	{
 		return $this->belongsToMany(Project::class, 'member_project');
 	}
+
+    public function leadingProjects()
+    {
+        return $this->hasMany(Project::class, 'leader');
+    }
 
 	public function getIsAdminLabelAttribute()
     {

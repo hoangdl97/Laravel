@@ -34,3 +34,19 @@ Route::resource('customer', 'CustomerController', [
 Route::prefix('customer')->name('customer.')->group(function() {
     Route::get('search', 'CustomerController@index')->name('search');
 });
+
+Route::resource('project', 'ProjectController', [
+	'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']
+]);
+
+Route::prefix('project')->name('project.')->group(function() {
+    Route::get('search', 'ProjectStatusController@index')->name('search');
+});
+
+Route::resource('projectstatus', 'ProjectStatusController', [
+	'only' => ['index', 'create', 'store', 'edit', 'update', 'destroy']
+]);
+
+Route::prefix('projectstatus')->name('projectstatus.')->group(function() {
+    Route::get('search', 'ProjectStatusController@index')->name('search');
+});

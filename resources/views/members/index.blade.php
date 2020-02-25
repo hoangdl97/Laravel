@@ -55,7 +55,7 @@
             <th class="text-center">Username</th>
             <th class="text-center">Image</th>
             <th class="text-center">Position</th>
-            <th class="text-center"></th>
+            <th class="text-center">Action</th>
         </tr>
         @foreach ($members as $member)
         <tr>
@@ -67,7 +67,7 @@
             <td class="text-center">{{ $member->username }}</td>
             <td class="text-center"><img class="w-25" src="{{ asset("storage/uploads/$member->image") }}"></td>
             <td class="text-center">{{ $member->is_admin_label }}</td>
-            <td class="text-center d-flex">
+            <td class="d-flex justify-content-center">
                 <a type="button" href="{{ route ('member.edit', $member->id) }}" class="btn btn-info d-flex">
                     <span class="fa fa-user-edit mr-2 mt-1"></span>Edit
                 </a>

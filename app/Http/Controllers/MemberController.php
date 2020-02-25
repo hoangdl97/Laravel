@@ -78,8 +78,7 @@ class MemberController extends Controller
     public function update(EditMemberRequest $request, $id)
     {
         $data = $request->all();
-
-        $imageData = $request->hidden_image;
+        
         $image = $request->file('image');
         if ($image != '') {
             $imageData = uniqid() . '.' . request()->image->getClientOriginalExtension();
