@@ -7,7 +7,7 @@ use App\Models\Project;
 use App\Models\ProjectStatus;
 use App\Models\Customer;
 use App\Models\Member;
-use DB;
+use App\Http\Requests\RegisterProjectRequest;
 
 class ProjectController extends Controller
 {
@@ -49,17 +49,21 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        Project::create($data);
-        $id = DB::getPdo()->lastInsertId();
-        $result = $request->member_id;
-        foreach ($result as $test) {
-            $test1[] = DB::table('member_project')->insert(array(
-            'member_id' => $request->member_id,
-            'project_id' => $id,
-        ));
+        $project = Project::create($data);
+        $members = $request->member_id;
+        foreach ((array) $members as $member) {
+            $project->members()->attach($member);
         }
+
         return redirect()->route('project.index')->with('success', __('Add successfully'));
         //
+    }
+    
+    public function show($id){
+        $result = Project::findOrFail($id)->load('members');
+         return response()->json([
+             'result' => $result
+         ], 200);
     }
 
     /**
@@ -70,7 +74,13 @@ class ProjectController extends Controller
      */
     public function edit($id)
     {
-        return view('projects.edit')->with('project', Project::findOrFail($id));
+        $data = [
+            'project' => Project::findOrFail($id),
+            'customers' => Customer::all(),
+            'members' => Member::all(),
+            'statuses' => ProjectStatus::all(),
+        ];
+        return view('projects.edit', $data)->with ('project', Project::findOrFail($id));
         //
     }
 
@@ -83,6 +93,15 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $project = Project::findOrFail($id);
+        $project->update($request->all());
+        $members[] = $request->member_id;
+        if ($members != '') {
+            foreach ((array) $members as $member) {
+                $project->members()->sync($member);
+            }
+        }
+        return redirect()->route('project.index')->with('success', __('Edit successfully'));
         //
     }
 

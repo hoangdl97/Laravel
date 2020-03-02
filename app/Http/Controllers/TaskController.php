@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\ProjectStatus;
-use App\Http\Requests\RegisterProjectStatusRequest;
-use App\Http\Requests\EditProjectStatusRequest;
+use App\Models\Task;
+use App\Models\TaskStatus;
+use App\Models\Member;
+use App\Models\Project;
 
-class ProjectStatusController extends Controller
+class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,9 +17,9 @@ class ProjectStatusController extends Controller
      */
     public function index(Request $request)
     {
-        $projectstatuses = ProjectStatus::search($request)
+        $tasks = Task::search($request)
             ->paginate(config('app.pagination'));
-        return view('projectstatuses.index', ['project_statuses' => $projectstatuses]);
+        return view('tasks.index', ['tasks' => $tasks]);
         //
     }
 
@@ -29,7 +30,12 @@ class ProjectStatusController extends Controller
      */
     public function create()
     {
-        return view('projectstatuses.create');
+        $data = [
+            'task_statuses' => TaskStatus::all(),
+            'projects' => Project::all(),
+            'members' => Member::all()
+        ];
+        return view('tasks.create', $data);
         //
     }
 
@@ -39,12 +45,10 @@ class ProjectStatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RegisterProjectStatusRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->all();
-        ProjectStatus::create($data);
-
-        return redirect()->route('projectstatus.index')->with('success', __('Add successfully'));
+        Task::create($request->all());
+        return redirect()->route('task.index')->with('success', __('Add successfully'));
         //
     }
 
@@ -56,7 +60,15 @@ class ProjectStatusController extends Controller
      */
     public function edit($id)
     {
-        return view('projectstatuses.edit')->with('projectstatus', ProjectStatus::findOrFail($id));
+        
+        $task = Task::findOrFail($id);
+            $data = [
+                'task' => Task::findOrFail($id),
+                'projects' => Project::all(),
+                'statuses' => TaskStatus::all(),
+                'members' => Member::all()
+            ];
+            return view('tasks.edit', $data);
         //
     }
 
@@ -67,12 +79,8 @@ class ProjectStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(EditProjectStatusRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $data = $request->all();
-        ProjectStatus::findOrFail($id)->update($data);
-        
-        return redirect()->route('projectstatus.index')->with('success', __('Edit successfully'));
         //
     }
 
@@ -84,9 +92,9 @@ class ProjectStatusController extends Controller
      */
     public function destroy($id)
     {
-        $result = ProjectStatus::findOrFail($id);
+        $result = Task::findOrFail($id);
         $result->delete();
-        return redirect()->route('projectstatus.index')->with('success', __('Delete successfully'));
+        return redirect()->route('task.index')->with('success', __('Delete successfully'));
         //
     }
 }

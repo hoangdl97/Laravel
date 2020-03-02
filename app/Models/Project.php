@@ -21,12 +21,12 @@ class Project extends Model
 
     public function scopeSearchLeader($query, $request)
     {
-        return $query->where('leader', 'like', '%' . $request->searchEmail . '%');
+        return $query->where('leader', 'like', '%' . $request->searchLeader . '%');
     }
 
     public function scopeSearchStatus($query, $request)
     {
-        return $query->where('project_status_id', 'like', '%' . $request->searchPhone . '%');
+        return $query->where('project_status_id', 'like', '%' . $request->searchStatus . '%');
     }
 
 	protected $fillable = [
@@ -48,14 +48,24 @@ class Project extends Model
 		return $this->belongsTo(ProjectStatus::class);
 	}
 
+	public function member_project()
+	{
+		return $this->belongsToMany(Member::class);
+	}
+
 	public function members()
 	{
-		return $this->belongsToMany(Member::class, 'member_project', 'id');
+		return $this->belongsToMany(Member::class, 'member_project');
 	}
 
 	public function leader()
 	{
-		return $this->belongsTo(Member::class);
+		return $this->belongsTo(Member::class, 'leader');
 	}
+
+	public function getMemberIdsAttribute()
+    {
+        return $this->members->pluck('id')->toArray();
+    }
     //
 }

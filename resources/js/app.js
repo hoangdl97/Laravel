@@ -8,6 +8,7 @@
 require('../../node_modules/admin-lte/plugins/bootstrap/js/bootstrap.min.js');
 require('../../node_modules/admin-lte/dist/js/adminlte.min.js');
 require('../../node_modules/admin-lte/plugins/select2/js/select2.min.js');
+Vue.component('User', require('./components/User.vue'));
 
 window.Vue = require('vue');
 

@@ -3,17 +3,17 @@
 @section('content')
     <div class="container">
     <div class="text-center">
-        <h1><span class="fa fa-user-plus mr-2"></span>Add Project</h1>
+        <h1><span class="fa fa-user-plus mr-2"></span>Add Task</h1>
         <hr/>
     </div>
     <div class="row">
         <div class="col-sm-8 col-md-5 col-12 m-auto">
             <div class="panel panel-warning">
                 <div class="panel-body">
-                    <form action="{{ route('project.store') }}" method="post" enctype="multipart/form-data">
+                    <form action="{{ route('task.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
-                            <label>Name :</label>
+                            <label>Task :</label>
                             <div>
                                 <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
@@ -62,40 +62,32 @@
                         </div>
                         <div class="form-group">
                                 <label>Status :</label>
-                                <select class="form-control" name="project_status_id">
-                                    @foreach( $project_statuses as $project_status )
-                                        <option value="{{ $project_status->id }}" {{ ($project_status->id == old('project_status_id')) ? 'selected': '' }}>{{ $project_status->name }}</option>
+                                <select class="form-control" name="task_status_id">
+                                <option value="empty" disabled selected>Choose status</option>
+                                    @foreach( $task_statuses as $task_status )
+                                        <option value="{{ $task_status->id }}" {{ ($task_status->id == old('task_status')) ? 'selected': '' }}>{{ $task_status->name }}</option>
                                     @endforeach
                                 </select>
                         </div>
                         <div class="form-group">
-                                <label>Leader :</label>
-                                <select class="form-control" name="leader">
-                                    @foreach( $members as $member )
-                                        <option value="{{ $member->id }}" {{ ($member->id == old('member_id')) ? 'selected': '' }}>{{ $member->name }}</option>
+                                <label>Project :</label>
+                                <select name="project_id" class="form-control" id="project_id" >
+                                <option value="empty" disabled selected>Choose project</option>
+                                    @foreach ($projects as $project)
+                                        <option value="{{ $project->id }}" {{ $project->id == old('project_id') ? 'selected' : '' }}>{{ $project->name }}</option>
                                     @endforeach
                                 </select>
                         </div>
-                        <div class="form-group">
+                        <div class="form-group Member_id">
                                 <label>Member :</label>
-                                <select name="member_id[]" class="js-select2-multi form-control" multiple="multiple">
-                                    @foreach ($members as $member)
-                                        <option value="{{ $member->id }}" {{ $member->id == old('member_id') ? 'selected' : '' }}>{{ $member->name }}</option>
-                                    @endforeach
-                                </select>
-                        </div>
-                        <div class="form-group">
-                                <label>Customer :</label>
-                                <select class="form-control" name="customer_id">
-                                    @foreach( $customers as $customer )
-                                        <option value="{{ $customer->id }}" {{ ($customer->id == old('customer_id')) ? 'selected': '' }}>{{ $customer->name }}</option>
-                                    @endforeach
+                                <select name="member_id" class="form-control" id="member" >
+                                   
                                 </select>
                         </div>
 
                         <div class="text-center">
                             <button type="submit" class="btn btn-success">Accept</button> &nbsp;
-                            <a href="{{ route('project.index') }}" class="btn btn-danger">Cancel</a>
+                            <a href="{{ route('task.index') }}" class="btn btn-danger">Cancel</a>
                         </div>
                     </form>
                 </div>
@@ -107,9 +99,31 @@
     <script>
         $(document).ready(function() {
             $(".js-select2-multi").select2();
+            
             $( ".datepicker" ).datepicker({
                 autoclose: true,
                 format: 'yyyy-mm-dd'
+            });
+
+            $("#project_id").change(function()
+            {
+                var project_id = $(this).val();
+                var member_id = project_id;
+                
+                $.ajax({
+                    type: "GET",
+                    url: "project/"+member_id+"/select",
+                    cache: false,
+                    success: function(response)
+                    {
+                        $('#member').empty();
+                        $.each(response['result']['members'], function (key, value) {
+                            $("#member").append(
+                                "<option value=" + value.id + ">" + value.name + "</option>"
+                            );
+                        });
+                    } 
+                });
             });
         });
     </script>
