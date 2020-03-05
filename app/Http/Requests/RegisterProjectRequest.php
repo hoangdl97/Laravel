@@ -29,8 +29,6 @@ class RegisterProjectRequest extends FormRequest
             'end_date' => 'required|date|min:8',
             'description' => 'required|text|max:255',
             'leader' => 'required|integer',
-            'customer_id' => 'required|integer',
-            'project_status_id' => 'required|integer',
             //
         ];
     }

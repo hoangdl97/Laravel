@@ -121,7 +121,7 @@ unset($__errorArgs, $__bag); ?>
                         </div>
                         <div class="form-group">
                                 <label>Project :</label>
-                                <select name="project_id" class="form-control" id="project_id">
+                                <select name="project_id" class="form-control" id="project_id1">
                                     <?php $__currentLoopData = $projects; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $project): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                         <option value="<?php echo e($project->id); ?>" <?php echo e($project->id == old('project_id') ? 'selected' : ''); ?>><?php echo e($project->name); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
@@ -129,11 +129,10 @@ unset($__errorArgs, $__bag); ?>
                         </div>
                         <div class="form-group Member_id">
                                 <label>Member :</label>
-                                <select name="member_id" class="form-control" id="member" >
-                                   
+                                <select name="member_id" class="form-control" id="member1" >
                                 </select>
                         </div>
-                        
+
                         <div class="text-center">
                             <button type="submit" class="btn btn-success">Accept</button> &nbsp;
                             <a href="<?php echo e(route('task.index')); ?>" class="btn btn-danger">Cancel</a>
@@ -154,7 +153,7 @@ unset($__errorArgs, $__bag); ?>
                 format: 'yyyy-mm-dd'
             });
 
-            $("#project_id").change(function()
+            $("#project_id1").change(function()
             {
                 var project_id = $(this).val();
                 var member_id = project_id;
@@ -165,9 +164,9 @@ unset($__errorArgs, $__bag); ?>
                     cache: false,
                     success: function(response)
                     {
-                        $('#member').empty();
+                        $("#member1").html($(this).text());
                         $.each(response['result']['members'], function (key, value) {
-                            $("#member").append(
+                            $("#member1").append(
                                 "<option value=" + value.id + ">" + value.name + "</option>"
                             );
                         });

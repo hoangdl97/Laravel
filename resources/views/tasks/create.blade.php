@@ -99,7 +99,7 @@
     <script>
         $(document).ready(function() {
             $(".js-select2-multi").select2();
-            
+
             $( ".datepicker" ).datepicker({
                 autoclose: true,
                 format: 'yyyy-mm-dd'
@@ -115,14 +115,15 @@
                     url: "project/"+member_id+"/select",
                     cache: false,
                     success: function(response)
-                    {
+                    {                        
+                        $("#member").html($(this).text());
                         $('#member').empty();
                         $.each(response['result']['members'], function (key, value) {
                             $("#member").append(
                                 "<option value=" + value.id + ">" + value.name + "</option>"
                             );
                         });
-                    } 
+                    }
                 });
             });
         });
