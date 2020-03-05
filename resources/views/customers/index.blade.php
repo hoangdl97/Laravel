@@ -44,7 +44,7 @@
             <th class="text-center">Email</th>
             <th class="text-center">Address</th>
             <th class="text-center">Image</th>
-            <th class="text-center"></th>
+            <th class="text-center">Action</th>
         </tr>
         @foreach ($customers as $customer)
         <tr>
@@ -54,7 +54,7 @@
             <td class="text-center">{{ $customer->email }}</td>
             <td class="text-center">{{ $customer->address }}</td>
             <td class="text-center"><img class="w-25" src="{{ asset("storage/uploads/$customer->image") }}"></td>
-            <td class="text-center d-flex">
+            <td class="d-flex justify-content-center">
                 <a type="button" href="{{ route ('customer.edit', $customer->id) }}" class="btn btn-info d-flex">
                     <span class="fa fa-user-edit mr-2 mt-1"></span>Edit
                 </a>

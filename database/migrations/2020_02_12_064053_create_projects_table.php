@@ -19,6 +19,7 @@ class CreateProjectsTable extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->text('description', 255);
+            $table->integer('leader');
             $table->integer('customer_id');
             $table->integer('project_status_id');
             $table->timestamps();

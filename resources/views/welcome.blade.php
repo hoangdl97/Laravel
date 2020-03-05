@@ -92,7 +92,11 @@
                 <a href="https://vapor.laravel.com">Vapor</a>
                 <a href="https://github.com/laravel/laravel">GitHub</a>
             </div>
+            <div id="app">
+            <User></User>
         </div>
+        </div>
+        <script src="/js/app.js"></script>
     </div>
 </body>
 
